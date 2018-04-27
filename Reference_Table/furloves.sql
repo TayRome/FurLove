@@ -1,0 +1,1 @@
+SELECT * FROM furlove.filters;

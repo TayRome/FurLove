@@ -1,0 +1,32 @@
+FilterId,Category,UserFilter,LinqFilter 
+1,Age,Puppy, <=3 
+2,Age,Adult,>3 && dog.Age <10 
+3,Age,Senior,>=10 
+4,Breed,Boxer,Boxer 
+5,Breed,Bulldog,Bulldog 
+6,Breed,Cocker Spaniel,Cocker Spaniel 
+7,Breed,German Shepherd,German Shepherd 
+8,Breed,Golden Retriever,Golden Retriever 
+9,Breed,Labrador,Labrador 
+10,Breed,Pitbull,Pitbull 
+11,Breed,Poodle,Poodle 
+12,Breed,Rottweiler,Rottweiler 
+13,Breed,Yorkie,Yorkie 
+14,Breed,Mixed Breed,Mixed Breed 
+15,Breed,Other,Other 
+16,BodyType,Toy,Toy 
+17,BodyType,Small,Small 
+18,BodyType,Medium,Medium 
+19,BodyType,Husky,Husky 
+20,HighestEducation,None,None 
+21,HighestEducation,Student,Student 
+22,HighestEducation,Obedience School,Obedience School 
+23,HighestEducation,Advanced Skills,Advanced Skills 
+24,Barking,Never,Never 
+25,Barking,Occasionally,Occasionally 
+26,Barking,Daily,Daily 
+27,Barking,Trying to Quit,Trying to Quit 
+28,Accidents,Never,Never 
+29,Accidents,Rarely,Rarely 
+30,Accidents,When Ill,When Ill 
+31,Accidents,Frequently,Frequently

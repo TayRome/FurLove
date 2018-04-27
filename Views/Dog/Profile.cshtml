@@ -1,0 +1,365 @@
+@model DogDay.Models.Dog
+@using DogDay.Models
+
+@{
+    DogProfileViewModel EditProfile = new DogProfileViewModel();
+    bool Editable = false;
+    if(@Model.DogId == @ViewBag.currDogId){
+        EditProfile.DogId = @Model.DogId;
+        EditProfile.Email = @Model.Email;
+        EditProfile.Breed = @Model.Breed;
+        EditProfile.Age = @Model.Age;
+        EditProfile.BodyType = @Model.BodyType;
+        EditProfile.HighestEducation = @Model.HighestEducation;
+        EditProfile.Barking = @Model.Barking;
+        EditProfile.Accidents = @Model.Accidents;
+        EditProfile.Description = @Model.Description;
+        foreach (var interest in @Model.Interests){
+            EditProfile.Interests.Add(@interest.InterestId);
+        }
+        foreach (var human in @Model.Humans){
+            EditProfile.Humans.Add(@human.HumanId);
+        }
+        foreach (var animal in @Model.Animals){
+            EditProfile.Animals.Add(@animal.Animal_Id);
+        }
+        Editable = true;
+    }
+}
+
+    <div class="container body-content profileBkgd" id="wrapper">
+        <div class="Logo">
+            <h1>Who's a Good Dog?</h1>
+
+        </div>
+
+        @Html.Partial("NavBar")
+        <br>
+        <div class="profileContent">
+            <div class="profileTile">
+                <div class="leftPanelProfile">
+                    @if(@Model.PhotoPath == null && @Editable){
+                        <img class="fullProfile" id="openPhoto" src="@Url.Content("~/images/addie.jpg")" />
+                    }
+                    @if(@Model.PhotoPath == null && !@Editable){
+                        <img class="fullProfile" src="@Url.Content("~/images/addie.jpg")" />
+                        }
+                    @if(@Model.PhotoPath != null){
+                        <img class="fullProfile" src=@Model.PhotoPath>
+                    }
+                    @if(@Editable){
+                        <button onClick="openEdit()">Edit Profile</button>
+                        <button onClick="openPrefs()">Set Preferences</button>
+                    }else{
+                        <ul class="icons">
+                            <li class="icons"><a href="mailto:@Model.Email"><img class="icon" style="height:45px;" src="@Url.Content("~/images/email.png")"></a></li>
+                            <li class="icons"><a href="#newMessage"><img class="icon" style="height:37px;" src="@Url.Content("~/images/msg.png")"></a></li>
+                            <li class="icons"><a href="#newWink"><img class="icon" style="height:40px;" src="@Url.Content("~/images/wink.png")"></a></li>
+                            <li class="icons"><a asp-controller="Dog" asp-action="Block" asp-route-DogId=@Model.DogId><img class="icon" style="height:40px;" src="@Url.Content("~/images/block.png")"></a></li>
+                        </ul>
+                    }
+                </div>
+                <div class="rightPanelProfile">
+                    <h2>@Model.Name</h2>
+                    <ul>
+                        <li>@Model.Age Y | @(Model.Age*7) DY</li>
+                        <li>Seattle, Washington</li>
+                        <li>Seeking Play Date</li>
+                    </ul>
+                    <table class="infoTile">
+                        <tr>
+                            <td><strong>Body Type</strong></td>
+                            <td>@Model.BodyType</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Breed</strong></td>
+                            <td>@Model.Breed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CoHabitants</strong></td>
+                            <td>@foreach(var animal in @Model.Animals){
+                                @animal.Animal.Type<span> </span>
+                            }
+                            @if(@Model.Animals.Count == 0){
+                                <span>None</span>
+                            }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Family</strong></td>
+                            <td>@foreach(var human in @Model.Humans){
+                                @human.Human.Relationship<span> </span>
+                            }
+                            @if(@Model.Humans.Count == 0){
+                                <span>None</span>
+                            }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Education</strong></td>
+                            <td> @Model.HighestEducation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Barking</strong></td>
+                            <td>@Model.Barking</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Accidents</strong></td>
+                            <td>@Model.Accidents</td>
+                        </tr>
+                    </table>
+                </div>
+            <div class="profileInfo">
+                <h2> About Me </h2>
+                <p>@Model.Description</p>
+
+                <h2> My Interests </h2>
+                <p>
+                    @foreach(var interest in @Model.Interests){
+                    <span>@interest.Interest.Description </span>
+                    @if(@Model.Interests.Count == 0){
+                        <span>None</span>
+                    }
+                }
+                </p>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <a class="lightbox" id="newMessage">
+    
+    <div class="messageBox" style="vertical-align: top;">
+        <p style="display:inline-block;">Send To: @Model.Name</p>
+        <form class="close" action="#" style="display:inline-block;">
+            <button style="background-color: whitesmoke;" class="tablinks" type="submit">close</button>
+        </form>
+
+        <form class="message" action="/sendMessage" style="width:350px; margin:auto;margin-top:10px;" method="POST">
+            <input type="hidden" value="@Model.DogId" name="reciever">
+            <input type="text" class="message" name="MessageContent" style="background-color:white;width:350px;height:120px;"><br>
+            <button style="background-color:#FB8C00;color:white;" class="tablinks" type="submit">submit</button>
+        </form>
+
+    </div>
+    
+    </a>
+
+    <a class="lightbox" id="newWink">
+    
+    <div class="messageBox" style="vertical-align: top; text-align:center;">
+        <p style="display:inline-block;margin-top:30px;">Send A Wink To @Model.Name ?</p>
+
+        <form class="message" action="/sendMessage" style="width:350px; margin:auto;margin-top:10px;text-align:center;" method="POST">
+            <input type="hidden" value="@Model.DogId" name="reciever">
+            <input type="hidden" class="message" name="MessageContent" value=";)"><br>
+            <button style="background-color:#FB8C00;color:white;" class="tablinks" type="submit">Send</button>
+        </form>
+        <form class="" action="#" style="display:inline-block;margin:auto;width:100px;">
+           <button style="background-color: whitesmoke;margin:auto;display: inline-block;width:88px;" class="tablinks" type="submit">Back</button>
+        </form>
+
+    </div>
+    
+    </a>
+
+    @Html.Partial("ProfileUpdate", (DogProfileViewModel)@EditProfile)
+
+<div id="PhotoModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" id="closePhoto">&times;</span>
+            <h2>Show everyone how heckin cute you are!</h2>
+        </div>
+        <div class="modal-body">
+                <p>Select a photo for upload</p>
+                <form method="post" enctype="multipart/form-data" asp-controller="Dog" asp-action="PhotoUpload">
+                    <input type="file" name="Photo" accept="image/*" />
+                    <button>Submit</button>
+                </form>
+        </div>
+    </div>
+</div>
+
+@{
+    List<int> dogFilters = new List<int>();
+    foreach (var preference in @Model.Preferences){
+        dogFilters.Add(preference.FilterId);
+    }
+}
+
+<div id="PrefModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" id="closePref">&times;</span>
+            <h2>Tell us about the kind of dog you want a play date with!</h2>
+        </div>
+        <div class="modal-body">
+                <p>If it's really important to you, mark that category as a dealbreaker!</p>
+                <form method="post" asp-controller="Dog" asp-action="SetPreferences">
+                    <table class="prefsTable">
+                        <tr>
+                            <td><p>Age</p></td>
+                            <td><p>Breed</p></td>
+                            <td><p>Body Type</p></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select name="PrefAge" class="multiselect">
+                                    <option></option>
+                                    <option value="1">Puppy</option>
+                                    <option value="2">Adult</option>
+                                    <option value="3">Senior</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="PrefBreed" class="multiselect">
+                                    <option></option>
+                                    <option value="4">Boxer</option>
+                                    <option value="5">Bulldog</option>
+                                    <option value="6">Cocker Spaniel</option>
+                                    <option value="7">German Shepherd</option>
+                                    <option value="8">Golden Retriever</option>
+                                    <option value="9">Labrador</option>
+                                    <option value="10">Pitbull</option>
+                                    <option value="11">Poodle</option>
+                                    <option value="12">Rottweiler</option>
+                                    <option value="13">Yorkie</option>
+                                    <option value="14">Mixed Breed</option>
+                                    <option value="15">Other</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="PrefBodyType" class="multiselect">
+                                    <option></option>
+                                    <option value="16">Toy</option>
+                                    <option value="17">Small</option>
+                                    <option value="18">Medium</option>
+                                    <option value="19">Husky</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p>Education</p></td>
+                            <td><p>Barking</p></td>
+                            <td><p>Accidents</p></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select name="PrefEducation" class="multiselect">
+                                    <option></option>
+                                    <option value="20">None</option>
+                                    <option value="21">Student</option>
+                                    <option value="22">Obedience School</option>
+                                    <option value="23">Advanced Skills</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="PrefBarking" class="multiselect">
+                                    <option></option>
+                                    <option value="24">Never</option>
+                                    <option value="25">Occasionally</option>
+                                    <option value="26">Daily</option>
+                                    <option value="27">Trying to Quit</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="PrefAccidents" class="multiselect">
+                                    <option></option>
+                                    <option value="28">Never</option>
+                                    <option value="29">Rarely</option>
+                                    <option value="30">When Ill</option>
+                                    <option value="31">Frequently</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <button>Submit</button>
+                </form>
+        </div>
+    </div>
+</div>
+
+</html>
+<script>
+
+    function openCategory(categoryName) {
+        var i;
+        var x = document.getElementsByClassName("category");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        document.getElementById(categoryName).style.display = "block";
+    }
+
+    function openEdit(){
+        document.getElementById("RegModal").style.display = "block";
+        document.getElementById("profileCats").style.display = "block";
+        document.getElementById("submitProfile").style.display = "block";
+        openCategory('Age');
+    }
+
+    function openPrefs(){
+        document.getElementById("PrefModal").style.display = "block";
+    }
+
+    var photo = document.getElementById('PhotoModal');
+    var pref = document.getElementById("PrefModal");
+    
+    try {
+        var openPhoto = document.getElementById("openPhoto");
+    } catch(err) {}
+
+    try {
+        var closePhoto = document.getElementById("closePhoto");
+    } catch(err) {}
+
+    try {
+        var closePref = document.getElementById("closePref");
+    } catch(err) {}
+
+    $(document).ready(function(){
+
+        $('#dashboard').submit(function(event){
+            event.preventDefault();
+        });
+
+        if (openPhoto){
+            openPhoto.onclick = function() {
+                photo.style.display = "block";
+            }
+        }
+
+        if (closePhoto){
+            closePhoto.onclick = function() {
+                photo.style.display = "none";
+            }
+
+        }
+            
+        if (closePref){
+            closePref.onclick = function(){
+                console.log("CLOSE");
+                pref.style.display = "none";
+            }
+        }
+            
+        // Log/Reg Modal scripting:
+        var registrationModal = document.getElementById('RegModal');
+        var closeReg = document.getElementById("closeReg");
+
+        closeReg.onclick = function(){
+            registrationModal.style.display = "none";
+        }
+
+        var AgeSlider = document.getElementById("AgeSlider");
+        var AgeValue = document.getElementById("AgeValue");
+        AgeValue.innerHTML = AgeSlider.value; // Display the default slider value
+
+        // Update the current slider value (each time you drag the slider handle)
+        AgeSlider.oninput = function() {
+            AgeValue.innerHTML = this.value;
+        }
+    });
+</script>

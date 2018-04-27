@@ -1,0 +1,23 @@
+@model DogDay.Models.LoginViewModel
+
+<div id="LoginModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="closeLog" class="close">New Member?</span>
+            <h2>You're a Good Dog!</h2>
+        </div>
+        <div class="modal-body">
+            <br/>
+                <form asp-controller="Dog" asp-action="ProcessLogin" method="post">
+                    <div class="flex-space-around">
+                         <label class="logreg-label" asp-for="Email">Email: <span class='error' id="LEmailErrors"></span></label>
+                        <input class="logreg-input" asp-for="Email" id="loginEmail">
+                        <label class="logreg-label" asp-for="Password">Password: <span class='error' id="LPasswordErrors"></span></label>
+                        <input class="logreg-input" asp-for="Password" id="loginPassword">
+                    </div>
+            <br/>
+            <button type="submit" onclick="login()">Login</button>
+            </form>
+        </div>
+    </div>
+</div>

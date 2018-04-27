@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FurLove</title>
+    <link href="https://fonts.googleapis.com/css?family=Wendy+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link rel="stylesheet" href="./css/normalize.css" />
+    <link rel="stylesheet" href="./css/site.css" />
+</head>
+<body>
+    <div class="container body-content" id="wrapper">
+        <div class="Logo">
+            <h1>Who's a Good Dog?</h1>
+        </div>
+        <div class="row">
+            <div class="navigation">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#news">News</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropbtn">Dropdown</a>
+                        <div class="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column one-third-l one-third-m full-width-s">
+                <h1>Default H1 styling </h1>
+            </div>
+            <div class="column one-third-l one-third-m full-width-s">
+                <h3>Default H3 styling </h3>
+                <button id="openModal">Default Button (click to open a modal)</button>
+                <div id="MyModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span class="close">&times;</span>
+                            <h2>Header for the Modal</h2>
+                        </div>
+                        <div class="modal-body">
+                                <p>This is text inside a Modal</p>
+                        </div>
+                        <div class="modal-footer">
+                            <h4>And a Modal Footer</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column one-third-l one-third-m full-width-s">
+                <p>Default p styling </p>
+                <a href="http://gmail.com">Default a styling</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column one-l one-half-m full-width-l"><div class="Logo LogoSmall">
+                <h1>FurLove</h1>
+            </div></div>
+            <div class="column three-l one-half-m one-half-l">Example of responsive classes - three columns at large, half at medium, half at small</div>
+            <div class="column four-l one-third-m one-half-l">Example of responsive classes - four columns at large, one-third at medium, half at small</div>
+            <div class="column one-third-l two-thirds-m full-width-l">Example of responsive classes - one-third columns at large, two-thirds at medium, full at small</div>
+        </div>
+        
+    </div>
+        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.js"
+                asp-fallback-test="window.jQuery">
+</script>
+        
+        
+        <script src="./js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>

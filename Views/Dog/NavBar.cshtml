@@ -1,0 +1,26 @@
+<div class="navigation">
+    <ul>
+        <li><a asp-controller="Dog" asp-action="Profile" asp-route-DogId=@ViewBag.currDogId>Home</a></li>
+        <li><a asp-controller="Dog" asp-action="Search">Search</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Matches</a>
+            <div class="dropdown-content">
+                <a asp-controller="Dog" asp-action="Match" asp-route-MatchMethod="Match">My Matches</a>
+                <a asp-controller="Dog" asp-action="Match" asp-route-MatchMethod="Reverse">Reverse Matches</a>
+                <a asp-controller="Dog" asp-action="Match" asp-route-MatchMethod="Mutual">Mutual Matches</a>
+            </div>
+        </li>
+    </ul>
+
+    <ul style="float:right;">
+        <li><a asp-controller="Dog" asp-action="Messages">Messages</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">My Account</a>
+            <div class="dropdown-content">
+                <a asp-controller="Dog" asp-action="Profile" asp-route-DogId=@ViewBag.currDogId>My Profile</a>
+                <a asp-controller="Dog" asp-action="Logout">Logout</a>
+                <a href="#">Settings</a>
+            </div>
+        </li>
+    </ul>
+</div>

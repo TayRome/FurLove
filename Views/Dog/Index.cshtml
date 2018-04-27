@@ -1,0 +1,97 @@
+﻿@using DogDay.Models
+
+<div class="header">
+    <div class="Logo">
+        <h1>Fur Love!</h1>
+    </div>
+
+    <img class="icon" style="width:100%" src="@Url.Content("~/images/frenchie.jpg")" />
+</div>
+@Html.Partial("Login", (LoginViewModel)@ViewBag.LoginDog)
+
+@Html.Partial("ProfileUpdate", (DogProfileViewModel)@ViewBag.ProfileDog)
+
+<script>
+    //Registration Tab Navigation Bar:
+    function openCategory(categoryName) {
+        var i;
+        var x = document.getElementsByClassName("category");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        document.getElementById(categoryName).style.display = "block";
+    }
+
+    function regPartOne(){
+        var registerDog = {
+            Name : $("#registerName").val(),
+            Email : $("#registerEmail").val(),
+            Password : $("#registerPassword").val(),
+            PassConf : $("#registerPassConf").val()
+        }
+        $.post("PreRegister", registerDog, function(response){
+            if(response["errors"] == "True"){
+                document.getElementById("NameErrors").innerHTML = response["Name"];
+                document.getElementById("EmailErrors").innerHTML = response["Email"];
+                document.getElementById("PasswordErrors").innerHTML = response["Password"];
+                document.getElementById("PassConfErrors").innerHTML = response["PassConf"];
+            } else {
+                document.getElementById("profileCats").style.display = "block";
+                document.getElementById("startProfile").style.display = "none";
+                document.getElementById("submitProfile").style.display = "block";
+                openCategory('Age');
+            }
+        });
+    }
+
+    function login(){
+        var loginDog = {
+            Email : $("#loginEmail").val(),
+            Password : $("#loginPassword").val(),
+        }
+        $.post("ProcessLogin", loginDog, function(response){
+            console.log(response);
+            if(response["errors"] == "True"){
+                document.getElementById("LEmailErrors").innerHTML = response["Email"];
+                document.getElementById("LPasswordErrors").innerHTML = response["Password"];
+            } else {
+                window.location.replace("Search")
+            }
+        });
+    }
+
+    $(document).ready(function(){
+
+        $('form').submit(function(event){
+            event.preventDefault();
+        });
+       
+        // Log/Reg Modal scripting:
+        var loginModal = document.getElementById('LoginModal');
+        var registrationModal = document.getElementById('RegModal');
+        var closeLog = document.getElementById("closeLog");
+        var closeReg = document.getElementById("closeReg");
+
+        registrationModal.style.display = "block";
+
+        closeLog.onclick = function(){
+            registrationModal.style.display = "block";
+            loginModal.style.display = "none";
+        }
+
+        closeReg.onclick = function(){
+            registrationModal.style.display = "none";
+            loginModal.style.display = "block";
+        }
+
+        var AgeSlider = document.getElementById("AgeSlider");
+        var AgeValue = document.getElementById("AgeValue");
+        AgeValue.innerHTML = AgeSlider.value; // Display the default slider value
+
+        // Update the current slider value (each time you drag the slider handle)
+        AgeSlider.oninput = function() {
+            AgeValue.innerHTML = this.value;
+        }
+    });
+    
+</script>

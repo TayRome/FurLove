@@ -1,0 +1,301 @@
+@model DogDay.Models.SearchWrapper
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Fur Love</title>
+    <link href="https://fonts.googleapis.com/css?family=Wendy+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link rel="stylesheet" href="./css/normalize.css" />
+    <link rel="stylesheet" href="./css/site.css" />
+</head>
+
+<body>
+    <div class="container body-content" id="wrapper">
+        <div class="Logo">
+            <h1>Who's a Good Dog?</h1>
+        </div>
+
+        @Html.Partial("NavBar")
+
+        <br>
+        <div style="margin-bottom:50px;" class="profileContent">
+        <button onClick="openPref()">Set your search</button>
+        <div class="dropdown" style="display: inline-block;float:right;">
+                <button onclick="myFunction()" class="tablinks" id="sortButton">Sort By</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a onclick="sortYoungest()">Youngest</a>
+                    <a onclick="sortOldest()">Oldest</a>
+                    <a onclick="sortNewestMember()">Recent Member</a>
+                    <a onclick="sortOldestMember()">Oldest Member</a>
+                </div>
+        </div>
+        <br>
+        <div id="searchResult">
+        @foreach(var dog in @Model.Dogs){
+            <div class="searchTile">
+            <a href="Profile/@dog.DogId">
+                <div style="height:175px;width:175px;background-color:whitesmoke;margin:auto;">
+                    @if(@dog.PhotoPath != null){
+                        <img class="searchTile" src=@dog.PhotoPath>
+                    }else{
+                        <img class="searchTile" src="/images/sit.jpg">
+                    }
+                </div>
+                <div style="text-align: center;margin-top:10px;">
+                @dog.Name @dog.Age<br>
+                @dog.Breed @((dog.MatchPercent*100).ToString("##")) %
+                </div>
+            </a>
+            </div>
+        }
+        </div>
+        
+        <div id="searchResultYoungest" class="hidden">
+        @foreach(var dog in @Model.Dogs.OrderBy(t => t.Age)){
+            <div class="searchTile">
+            <a href="Profile/@dog.DogId">
+                <div style="height:175px;width:175px;background-color:whitesmoke;margin:auto;">
+                    @if(@dog.PhotoPath != null){
+                        <img class="searchTile" src=@dog.PhotoPath>
+                    }else{
+                        <img class="searchTile" src="/images/run.jpg">
+                    }
+                </div>
+                <div style="text-align: center;margin-top:10px;">
+                @dog.Name @dog.Age<br>
+                @dog.Breed @((dog.MatchPercent*100).ToString("##")) %
+                </div>
+            </a>
+            </div>
+        }
+        </div>
+
+        <div id="searchResultOldest" class="hidden">
+        @foreach(var dog in @Model.Dogs.OrderByDescending(t => t.Age)){
+            <div class="searchTile">
+            <a href="Profile/@dog.DogId">
+                <div style="height:175px;width:175px;background-color:whitesmoke;margin:auto;">
+                    @if(@dog.PhotoPath != null){
+                        <img class="searchTile" src=@dog.PhotoPath>
+                    }else{
+                        <img class="searchTile" src="/images/sit.jpg">
+                    }
+                </div>
+                <div style="text-align: center;margin-top:10px;">
+                @dog.Name @dog.Age<br>
+                @dog.Breed @((dog.MatchPercent*100).ToString("##")) %
+                </div>
+            </a>
+            </div>
+        }
+        </div>
+
+        <div id="searchResultNewestMember" class="hidden">
+        @foreach(var dog in @Model.Dogs.OrderByDescending(t => t.created_at)){
+            <div class="searchTile">
+            <a href="Profile/@dog.DogId">
+                <div style="height:175px;width:175px;background-color:whitesmoke;margin:auto;">
+                    @if(@dog.PhotoPath != null){
+                        <img class="searchTile" src=@dog.PhotoPath>
+                    }else{
+                        <img class="searchTile" src="/images/sit.jpg">
+                    }
+                </div>
+                <div style="text-align: center;margin-top:10px;">
+                @dog.Name @dog.Age<br>
+                @dog.Breed @((dog.MatchPercent*100).ToString("##")) %
+                </div>
+            </a>
+            </div>
+        }
+        </div>
+
+        <div id="searchResultOldestMember" class="hidden">
+        @foreach(var dog in @Model.Dogs.OrderBy(t => t.created_at)){
+            <div class="searchTile">
+            <a href="Profile/@dog.DogId">
+                <div style="height:175px;width:175px;background-color:whitesmoke;margin:auto;">
+                    @if(@dog.PhotoPath != null){
+                        <img class="searchTile" src=@dog.PhotoPath>
+                    }else{
+                        <img class="searchTile" src="/images/run.jpg">
+                    }
+                </div>
+                <div style="text-align: center;margin-top:10px;">
+                @dog.Name @dog.Age<br>
+                @dog.Breed @((dog.MatchPercent*100).ToString("##")) %
+                </div>
+            </a>
+            </div>
+        }
+        </div>
+        
+
+        
+    <div id="PrefModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" id="closePref">&times;</span>
+                <h2>Choose the characteristics you want to see</h2>
+            </div>
+            <div class="modal-body">
+                    <form method="post" asp-controller="Dog" asp-action="ProcessSearch">
+                        <table class="prefsTable">
+                            <tr>
+                                <td><p>Age</p></td>
+                                <td><p>Breed</p></td>
+                                <td><p>Body Type</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="PrefAge" class="multiselect">
+                                        <option></option>
+                                        <option value="1">Puppy</option>
+                                        <option value="2">Adult</option>
+                                        <option value="3">Senior</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="PrefBreed" class="multiselect">
+                                        <option></option>
+                                        <option value="4">Boxer</option>
+                                        <option value="5">Bulldog</option>
+                                        <option value="6">Cocker Spaniel</option>
+                                        <option value="7">German Shepherd</option>
+                                        <option value="8">Golden Retriever</option>
+                                        <option value="9">Labrador</option>
+                                        <option value="10">Pitbull</option>
+                                        <option value="11">Poodle</option>
+                                        <option value="12">Rottweiler</option>
+                                        <option value="13">Yorkie</option>
+                                        <option value="14">Mixed Breed</option>
+                                        <option value="15">Other</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="PrefBodyType" class="multiselect">
+                                        <option></option>
+                                        <option value="16">Toy</option>
+                                        <option value="17">Small</option>
+                                        <option value="18">Medium</option>
+                                        <option value="19">Husky</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><p>Education</p></td>
+                                <td><p>Barking</p></td>
+                                <td><p>Accidents</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="PrefEducation" class="multiselect">
+                                        <option></option>
+                                        <option value="20">None</option>
+                                        <option value="21">Student</option>
+                                        <option value="22">Obedience School</option>
+                                        <option value="23">Advanced Skills</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="PrefBarking" class="multiselect">
+                                        <option></option>
+                                        <option value="24">Never</option>
+                                        <option value="25">Occasionally</option>
+                                        <option value="26">Daily</option>
+                                        <option value="27">Trying to Quit</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="PrefAccidents" class="multiselect">
+                                        <option></option>
+                                        <option value="28">Never</option>
+                                        <option value="29">Rarely</option>
+                                        <option value="30">When Ill</option>
+                                        <option value="31">Frequently</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <button>Submit</button>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+<script>
+    function sortYoungest(){
+        $("#sortButton").html("Youngest")
+        $("#searchResult").addClass("hidden")
+        $("#searchResultYoungest").removeClass("hidden")
+        $("#searchResultOldest").addClass("hidden")
+        $("#searchResultNewestMember").addClass("hidden")
+        $("#searchResultOldestMember").addClass("hidden")
+    }
+
+    function sortOldest(){
+        $("#sortButton").html("Oldest")
+        $("#searchResult").addClass("hidden")
+        $("#searchResultYoungest").addClass("hidden")
+        $("#searchResultOldest").removeClass("hidden")
+        $("#searchResultNewestMember").addClass("hidden")
+        $("#searchResultOldestMember").addClass("hidden")
+    }
+
+    function sortNewestMember(){
+        $("#sortButton").html("Newest Member")
+        $("#searchResult").addClass("hidden")
+        $("#searchResultYoungest").addClass("hidden")
+        $("#searchResultOldest").addClass("hidden")
+        $("#searchResultNewestMember").removeClass("hidden")
+        $("#searchResultOldestMember").addClass("hidden")
+    }
+    function sortOldestMember(){
+        $("#sortButton").html("Oldest Member")
+        $("#searchResult").addClass("hidden")
+        $("#searchResultYoungest").addClass("hidden")
+        $("#searchResultOldest").addClass("hidden")
+        $("#searchResultNewestMember").addClass("hidden")
+        $("#searchResultOldestMember").removeClass("hidden")
+    }
+
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+// Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+
+    var closePref = document.getElementById("closePref");
+    var pref = document.getElementById("PrefModal");
+
+    function openPref(){
+        console.log("OPENING")
+        pref.style.display = "block";
+    }
+
+    $(document).ready(function(){
+        closePref.onclick = function(){
+                pref.style.display = "none";
+        }
+
+    });
+</script>

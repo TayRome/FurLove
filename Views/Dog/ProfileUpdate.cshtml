@@ -1,0 +1,254 @@
+@model DogDay.Models.DogProfileViewModel
+@using DogDay.Models
+
+@{
+    string[] AllBodyTypes = new[] {"Toy", "Small", "Medium", "Husky"};
+    string[] AllAnimals = new[] {"Dog(s)", "Cat(s)", "Bird(s)", "Reptile(s)", "Fish(s)", "Rodent(s)", "Other"};
+    string[] AllHumans = new[] {"Mom(s)", "Dad(s)", "Sister(s)", "Brother(s)", "Other"};
+    string[] AllEducation = new[] {"None", "Student", "Obedience School", "Advanced Training/Special Skills"};
+    string[] AllBarking = new[] {"Never", "Occasionally", "Daily", "Trying to Quit"};
+    string[] AllAccidents = new[] {"Never", "Rarely", "When Ill", "Frequently"};
+    string[] AllBreeds = new[] {"Boxer", "Bulldog", "Cocker Spaniel", "German Shepherd", "Golden Retriever", "Labrador", "Pitbull", "Poodle", "Rottweiler", "Yorkie", "Mixed Breed", "Other"};
+    string[] AllInterests = new[] {"Chasing Small Animals", "Frisbee", "Treats", "Tug O' War", "Digging", "Chewing", "Celebrity Dogs", "Sniffing"};
+}
+
+<div id="RegModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            @if(@Model.Email == null){
+                <span id="closeReg" class="close">Login?</span>
+            }else{
+                <span id="closeReg" class="close">X</span>
+            }
+            <h2>Who's a Good Dog?</h2>
+            <div class="navigation" id="profileCats" style="display:none">
+                <ul>
+                    <li><a onclick="openCategory('Age')"><i class="material-icons">&#xE422;</i></a></li>
+                    <li><a onclick="openCategory('Body')"><i class="material-icons">&#xEB43;</i></a></li>
+                    <li><a onclick="openCategory('OtherAnimals')"><i class="material-icons">&#xE88A;</i></a></li>
+                    <li><a onclick="openCategory('Family')"><i class="material-icons">&#xE7FB;</i></a></li>
+                    <li><a onclick="openCategory('Education')"><i class="material-icons">&#xE80C;</i></a></li>
+                    <li><a onclick="openCategory('Barking')"><i class="material-icons">&#xE050;</i></a></li>
+                    <li><a onclick="openCategory('Accidents')"><i class="material-icons">&#xE000;</i></a></li>
+                    <li><a onclick="openCategory('Breed')"><i class="material-icons">&#xE91D;</i></a></li>
+                    <li><a onclick="openCategory('Interests')"><i class="material-icons">&#xE24E;</i></a></li>
+                    <li><a onclick="openCategory('Description')"><i class="material-icons">&#xE254;</i></a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="modal-body">
+            <br/>
+                @if(@Model.Email == null){
+                    @Html.Partial("PreRegister", (RegisterViewModel)@ViewBag.RegisterDog)
+                }
+                <form method="post" id="Profile">
+                <div id="Age" class="category" style="display:none">
+                    <h2>Age</h2>
+                    <label for="Age">Age: <span id="AgeValue"></span></label>
+                    <div id="slidecontainer">
+                        <input type="range" min="0" max="21" value=@Model.Age class="slider" id="AgeSlider" name="Age">
+                    </div>
+                    <br>
+                    <a class="modal-footer-link" onclick="openCategory('Body')">Next (Body Type)</a>
+                </div>
+                <div id="Body" class="category" style="display:none">
+                    <h2> Body Type</h2>
+                    <table>
+                        <tr>
+                        @foreach(var bodytype in @AllBodyTypes){
+                            if(@Model.BodyType == @bodytype){
+                                <td><input type="radio" name="BodyType" value=@bodytype checked><p>@bodytype</p></td>
+                            }else{
+                                <td><input type="radio" name="BodyType" value=@bodytype><p>@bodytype</p></td>
+                            }
+                        }
+                        </tr>
+                    </table>
+                    <br>
+                    <a class="modal-footer-link" onclick="openCategory('OtherAnimals')">Next (CoHabitation Status)</a>
+                </div>
+                <div id="OtherAnimals" class="category" style="display:none">
+                    <h2>Co Habitation Status</h2>
+                    <p>Select any animals you currently live with:</p>
+                    <table>
+                        <tr>
+                        @{
+                            int animalcounter = 1;
+                            foreach(var animal in @AllAnimals){
+                                if(animalcounter % 4 == 1 && animalcounter>1){
+                                    @:<tr>
+                                }
+                                if(@Model.Animals.IndexOf(animalcounter) != -1){
+                                    @:<td><input type="checkbox" name="Animals" value=@animalcounter checked><p>@animal</p></td>
+                                }else{
+                                    @:<td><input type="checkbox" name="Animals" value=@animalcounter><p>@animal</p></td>
+                                }
+                                if(animalcounter % 4 == 0 && animalcounter != 4){
+                                    @:</tr>
+                                }
+                                animalcounter += 1;
+                            }
+                        }
+                        </tr>
+                    </table>
+                    <br>
+                    <a class="modal-footer-link" onclick="openCategory('Family')">Next (Human Family)</a>
+                </div>
+                <div id="Family" class="category" style="display:none">
+                    <h2>Family</h2>
+                    <p>Select the member of your human family</p>
+                    <table>
+                        <tr>
+                        @{
+                            int humancounter = 1;
+                            foreach(var human in @AllHumans){
+                                if(humancounter % 4 == 1 && humancounter>1){
+                                    @:<tr>
+                                }
+                                if(@Model.Humans.IndexOf(humancounter) != -1){
+                                    @:<td><input type="checkbox" name="Humans" value=@humancounter checked><p>@human</p></td>
+                                }else{
+                                    @:<td><input type="checkbox" name="Humans" value=@humancounter><p>@human</p></td>
+                                }
+                                if(humancounter % 4 == 0 && humancounter != 4){
+                                    @:</tr>
+                                }
+                                humancounter += 1;
+                            }
+                        }
+                        </tr>
+                    </table>
+                    <br>
+                    <a class="modal-footer-link" onclick="openCategory('Education')">Next (Education)</a>
+                </div>
+                <div id="Education" class="category" style="display:none">
+                    <h2>Education</h2>
+                    <p>Select your highest level of education or training</p>
+                    <table>
+                        <tr>
+                        @foreach(var education in @AllEducation){
+                            if(@Model.HighestEducation == @education){
+                                <td><input type="radio" name="HighestEducation" value=@education checked><p>@education</p></td>
+                            }else{
+                                <td><input type="radio" name="HighestEducation" value=@education><p>@education</p></td>
+                            }
+                        }
+                        </tr>
+                    </table>
+                    <br>
+                    <a class="modal-footer-link" onclick="openCategory('Barking')">Next (Barking)</a>
+                </div>
+                <div id="Barking" class="category" style="display:none">
+                    <h2>Barking</h2>
+                    <p>Select your barking frequency</p>
+                    <table>
+                        <tr>
+                        @foreach(var barking in @AllBarking){
+                            if(@Model.Barking == @barking){
+                                <td><input type="radio" name="Barking" value=@barking checked><p>@barking</p></td>
+                            }else{
+                                <td><input type="radio" name="Barking" value=@barking><p>@barking</p></td>
+                            }
+                        }
+                        </tr>
+                    </table>
+                    <a class="modal-footer-link" onclick="openCategory('Accidents')">Next (Accidents)</a>
+                </div>
+                <div id="Accidents" class="category" style="display:none">
+                    <h2>Accidents</h2>
+                    <p>Select Accident Frequency</p>
+                    <table>
+                        <tr>
+                        @foreach(var accident in @AllAccidents){
+                            if(@Model.Accidents == @accident){
+                                <td><input type="radio" name="Accidents" value=@accident checked><p>@accident</p></td>
+                            }else{
+                                <td><input type="radio" name="Accidents" value=@accident><p>@accident</p></td>
+                            }
+                        }
+                        </tr>
+                    </table>
+                    <br>
+                    <a class="modal-footer-link" onclick="openCategory('Breed')">Next (Breed)</a>
+                </div>
+                <div id="Breed" class="category" style="display:none">
+                    <h2>Breed</h2>
+                    <select name="Breed">
+                        <option></option>
+                        @foreach(var breed in @AllBreeds){
+                            if(@Model.Breed == @breed){
+                                <option value=@breed selected>@breed</option>
+                            }else{
+                                <option value=@breed>@breed</option>
+                            }
+                        }
+                    </select>
+                    <br>
+                    <a class="modal-footer-link" onclick="openCategory('Interests')">Next (Interests)</a>
+                </div>
+                <div id="Interests" class="category" style="display:none">
+                    <h2>Interests</h2>
+                    <p>Select At Least 3</p>
+                    <table>
+                        <tr>
+                        @{
+                            int interestcounter = 1;
+                            foreach(var interest in @AllInterests){
+                                if(interestcounter % 4 == 1 && interestcounter>1){
+                                    @:<tr>
+                                }
+                                if(@Model.Interests.IndexOf(interestcounter+1) != -1){
+                                    @:<td><input type="checkbox" name="Interests" value=@interestcounter checked><p>@interest</p></td>
+                                }else{
+                                    @:<td><input type="checkbox" name="Interests" value=@interestcounter><p>@interest</p></td>
+                                }
+                                if(interestcounter % 4 == 0 && interestcounter !=4){
+                                    @:</tr>
+                                }
+                                interestcounter += 1;
+                            }
+                        }
+                        </tr>
+                    </table>
+                    <br>
+                    <a class="modal-footer-link" onclick="openCategory('Description')">Next (Describe yourself)</a>
+                </div>
+                <div id="Description" class="category" style="display:none">
+                    <h2>Description</h2>
+                    <textarea name="Description" rows="4" cols="100" placeholder="What should other dogs know about you?">@Model.Description</textarea>
+                    <br>
+                </div>
+            <br/>
+            </form>
+            <button id="submitProfile" onclick="updateProfile()" style="display:none">Submit Your Profile</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateProfile(){
+        console.log("PRE REGISTER SCRIPT******************************************")
+        var ProfileData = $("#Profile").serializeArray();
+        console.log(ProfileData);
+        var DogProfile = {};
+        DogProfile.Animals = [];
+        DogProfile.Humans = [];
+        DogProfile.Interests = [];
+        DogProfile.Preferences = [];
+        for (var i=0; i<ProfileData.length; i++){
+            var key = ProfileData[i]['name'];
+            if (key == "Animals" || key == "Humans" || key == "Interests" || key == "Preferences"){
+                if (DogProfile[key].indexOf(ProfileData[i]['value'] == -1)){
+                    DogProfile[key].push(ProfileData[i]['value']);
+                }
+            } else {
+                DogProfile[key] = ProfileData[i]['value'];
+            }
+        }
+        $.post("../UpdateProfile", DogProfile, function(response){
+            console.log("PRE REGISTER SCRIPT******************************************22222222")
+            window.location.replace("../Dashboard")
+        });
+    }
+</script>

@@ -1,0 +1,106 @@
+@model IEnumerable<DogDay.Models.Dog>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Fur Love</title>
+    <link href="https://fonts.googleapis.com/css?family=Wendy+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link rel="stylesheet" href="./css/normalize.css" />
+    <link rel="stylesheet" href="./css/site.css" />
+</head>
+
+<body> 
+    <div class="container body-content" id="wrapper">
+        <div class="Logo">
+            <h1>Who's a Good Dog?</h1>
+        </div>
+
+        @Html.Partial("NavBar")
+
+        <br>
+        <div class="profileContent">
+        <h1> Messages </h1>
+        <div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'London')">Inbox</button>
+        <button class="tablinks" onclick="openCity(event, 'Paris')">Sent</button>
+
+        </div>
+
+        <div id="London" class="tabcontent">
+        <h3>Inbox</h3>
+        
+        @foreach(var message in @ViewBag.Messages){
+            <hr>
+            
+            <div>
+            <a asp-controller="Dog" asp-action="Profile" asp-route-DogId=@message.Sender.DogId><p> From: @message.Sender.Name </p></a>
+            <a href="#newMessage">
+            <p style="color:black">
+                @message.MessageContent
+            </p>
+            </a>
+            </div>
+            <p style="color:#BDBDBD;font-size:11px;">@message.created_at</p>
+
+            <a class="lightbox" id="newMessage">
+                <div class="messageBox" style="vertical-align: top;">
+                <p style="display:inline-block;">Send To:@message.Sender.Name</p>
+                <form class="close" action="#" style="display:inline-block;">
+                    <button style="background-color: whitesmoke;" class="tablinks" type="submit">close</button>
+                </form>
+
+                <form class="message" action="/replyMessage" style="width:350px; margin:auto;margin-top:10px;" method="POST">
+                    <input type="hidden" value="@message.SenderId" name="reciever">
+                    <input type="text" class="message" name="MessageContent" style="background-color:white;width:350px;height:120px;"><br>
+                    <button style="background-color:#FB8C00;color:white;" class="tablinks" type="submit">submit</button>
+                </form>
+
+                </div>
+            </a>
+            
+        }
+        </div>
+
+        <div id="Paris" class="tabcontent">
+        <h3>Sent</h3>
+        @foreach(var message in @ViewBag.Sent){
+            <hr>
+            <p> <a href="Profile/@message.Receiver.DogId">To: @message.Receiver.Name</a></p>
+            @message.MessageContent
+            <p style="color:#BDBDBD;font-size:11px;">@message.created_at</p>
+        }
+        </div>
+
+
+</div>
+</div>
+
+<script>
+    $( document ).ready(function() {
+    openCity(event, 'London')
+    });
+
+    function openCity(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+    </script>
+</html>

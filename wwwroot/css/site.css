@@ -1,0 +1,630 @@
+﻿*{
+    font-family: 'Rubik', sans-serif;
+    box-sizing: border-box;
+}
+
+/* General Styling By Tag */
+h1{
+    color: #00B5FF;
+    font-weight: bold;
+}
+
+h3{
+    color: #3EC3FF;
+    font-weight: bold;
+}
+
+p{
+    color: #659AB2;
+}
+
+a{
+    color: #B26F3A;
+    text-decoration: none;
+}
+
+a:visited{
+    color: #FFBB73;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+button {
+    background-color: #FFBB73; /* Green */
+    border: none;
+    border-radius: 10px;
+    color: #B26F3A;
+    padding: 10px 25px;
+    margin: 5px auto;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    box-shadow: 2px 2px 5px #659AB2;
+}
+
+label, input{
+    display: block;
+}
+
+label {
+    padding: 4px 0 0;
+    float: left;
+    width: 150px;
+}
+
+input {
+    float: left;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #FFBB73;
+    margin: 5px auto;
+    text-align: left;
+}
+
+
+/* Special styling classes */
+.modal-footer-link{
+    size: 0.25rem;
+    position: relative;
+    bottom: -20px;
+}
+
+.flex-space-around{
+    display: flex;
+    justify-content: space-around;
+}
+
+.logreg-label, .logreg-input{
+    display: block;
+}
+
+.logreg-label {
+    padding: 4px 0 0;
+    float: left;
+    width: 150px;
+}
+
+.logreg-input {
+    float: left;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #FFBB73;
+    margin: 5px auto;
+    text-align: left;
+}
+
+.error{
+    font-size: smaller;
+    color: #B26F3A;
+}
+
+/* Logo Styling - For logo small use BOTH classes */
+.Logo > * {
+    font-family: 'Wendy One', sans-serif;
+    color: #00B5FF;
+    text-align: center;
+}
+
+.Logo{
+    width: 35%;
+    min-width: 90px;
+    margin: 10px auto;
+    padding: 5px;
+}
+
+.LogoSmall{
+    font-size: 50%;
+}
+
+.prefsTable{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.prefsTable > td{
+    text-align: center;
+    margin: 5px auto;
+    padding: 5px;
+}
+
+.multiselect{
+    height: 50px;
+    overflow: scroll;
+}
+
+.dealbreaker{
+    display: inline;
+    float: none;
+    margin: 5px;
+}
+
+/* Header Styling */
+.header{
+    width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+
+/* Modal Styling (for login/registration) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    
+}
+
+.modal-content {
+    background-color: #fefefe;
+    text-align: center;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #659AB2;
+    border-radius: 10px;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.modal-header {
+    padding: 5px 16px;
+    background-color: #659AB2;
+    color: white;
+}
+
+.modal-body {
+    padding: 2px 16px;
+    background-color: #fefefe;
+}
+
+.modal-footer {
+    padding: 10px 16px;
+    background-color: #659AB2;
+    color: white;
+}
+
+.close {
+    color: white;
+    float: right;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Navigation Menu Styling with DropDown */
+.navigation > ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #659AB2;
+}
+
+.navigation > ul > li {
+    float: left;
+}
+
+.navigation > ul > li > a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navigation > ul > li > a:hover, .dropdown:hover > .dropbtn {
+    background-color: #00B5FF;
+}
+
+div.navigation{
+    width: 90%;
+    margin:auto;
+    background-color: #659AB2;
+}
+
+div.navigation ul{
+    display: inline-block;
+    padding-top: 2px;
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Range Slider Styling */
+#slidecontainer {
+    width: 100%; /* Width of the outside container */
+}
+
+.slider {
+    -webkit-appearance: none; /* Override default CSS styles */
+    width: 100%; /* Full-width */
+    height: 15px; /* Specified height */
+    border-radius: 5px;
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    border-radius: 50%;
+    background: #3EC3FF; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    border-radius: 50%;
+    background: #3EC3FF; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+/* Grid Styling Rules */
+
+#wrapper {
+width: 90%;
+margin: auto;
+}
+
+.row {
+    width: 100%;
+padding-left: 20px;
+clear: both;
+}
+
+.content { padding: 20px; }
+
+.column {
+float: left;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin: 10px auto;
+}
+
+/* Small Screens only */
+@media only screen and (max-width: 480px) {
+    .full-width-s { width: 100%; }
+    .one-half-s { width: 50%; }
+}
+
+/* Medium Screens */
+@media only screen and (min-width: 481px) {
+    .full-width-m { width: 100% }
+.two-thirds-m { width: 66.66666666%; }
+    .seven-m { width: 58.33333333%; }
+    .one-half-m { width: 50%; }
+.five-m { width: 41.66666666%; }
+    .one-third-m { width: 33.33333333%; }
+}
+
+/* Large Screens */
+@media only screen and (min-width: 1024px) {
+    .full-width-l {width: 100%;}
+    .three-quarters-l {width: 75%;}
+    .two-thirds-l { width: 66.66666666%; }
+    .one-half-l { width: 50%; }
+    .one-third-l { width: 33.33333333%; }
+    .one-quarter-l {width: 25%;}
+
+    .one-l {width: 8.33%;}
+    .two-l {width: 16.66%;}
+    .three-l {width: 25%;}
+    .four-l {width: 33.33%;}
+    .five-l {width: 41.66%;}
+    .six-l {width: 50%;}
+    .seven-l {width: 58.33%;}
+    .eight-l {width: 66.66%;}
+    .nine-l {width: 75%;}
+    .ten-l {width: 83.33%;}
+    .eleven-l {width: 91.66%;}
+    .twelve-l {width: 100%;}
+
+    /* Can also use column widths without -l -m or -s assuming design for full browser */
+    .full-width {width: 100%;}
+    .three-quarters {width: 75%;}
+    .two-thirds { width: 66.66666666%; }
+    .one-half { width: 50%; }
+    .one-third { width: 33.33333333%; }
+    .one-quarter {width: 25%;}
+
+    .one{width: 8.33%;}
+    .two{width: 16.66%;}
+    .three{width: 25%;}
+    .four{width: 33.33%;}
+    .five{width: 41.66%;}
+    .six{width: 50%;}
+    .seven{width: 58.33%;}
+    .eight{width: 66.66%;}
+    .nine{width: 75%;}
+    .ten{width: 83.33%;}
+    .eleven{width: 91.66%;}
+    .twelve{width: 100%;}
+}
+
+
+/* Profile styling */
+
+.profileContent{
+    width:80%;
+    margin: auto;
+}
+
+div.profileTile{
+    background-color: white;
+    padding:20px;
+    height:400px;
+    width:90%;
+    max-width: 600px;
+    margin:auto;
+    box-shadow: 2px 2px 6px #888888;
+}
+
+div.profileInfo{
+    padding:20px;
+    width:90%;
+    max-width: 600px;
+    margin:auto;
+
+}
+div.leftPanelProfile{
+    margin-top:50px;
+    width:225px;
+    display: inline-block;
+    text-align: center;
+}
+div.rightPanelProfile{
+    display: inline-block;
+    vertical-align: top;
+    width:55%;
+    padding-left:30px;
+}
+
+div.rightPanelProfile li{
+    list-style: none;
+    margin-bottom:5px;
+}
+div.rightPanelProfile ul{
+    padding-left:10px;
+}
+
+
+img.fullProfile{
+    height:200px;
+    max-width: 200px;
+    box-shadow: 2px 2px 6px #888888;
+    border:5px solid white;
+    margin-bottom:15px;
+}
+
+img.searchTile{
+    height:100%;
+    max-width: 100%;
+    display: block;
+    margin: auto;
+    position: relative;
+}
+
+ul.icons{
+    margin-top:0px;
+    margin-bottom:5px;
+    padding-left:10px;
+}
+li.icons{
+    list-style: none;
+    display: inline-block;
+}
+ul img.icon{
+    height:50px;
+    display:inline-block;
+}
+img.preview{
+    height:70px;
+    display: inline-block;
+}
+table.infoTile{
+    width:80%;
+    margin:auto;
+    margin-top:45px;
+}
+div.searchTile{
+    background-color: white;
+    box-shadow: 2px 2px 6px #888888;
+    height: 240px;
+    width:200px;
+    display: inline-block;
+    padding:10px;
+    vertical-align: top;
+    margin-bottom:6px;
+}
+div.searchTile:hover{
+    background-color: whitesmoke;
+}
+
+
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+button.tablinks{
+    border-radius:0px;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+.hidden{
+    display:none;
+}
+
+/* Light box test */
+
+/*CSS reset settings here*/
+
+   /* html,body {
+font-family: 'Raleway', sans-serif;
+padding: 0 2em;
+font-size: 18px;
+background: #222;
+color: #aaa;
+text-align:center;
+}
+h1 {
+font-size: 3em;
+font-weight: 200;
+margin: 0.5em 0 0.2em 0;
+}
+p {
+margin: 1.5em 0;
+color: #888;
+}
+a.close{
+float:right;
+display: inline-block;
+text-decoration: none;
+color:#888;
+}
+.thumbnail {
+max-width: 40%;
+}
+hr{
+border: 1px solid #ccc;
+} */
+   /** LIGHTBOX MARKUP **/
+   
+   .lightbox {
+       /** Default lightbox to hidden */
+       display: none;
+       /** Position and style */
+       position: fixed;
+       z-index: 999;
+       width: 100%;
+       height: 100%;
+       top: 0;
+       left: 0;
+       background: rgba(0,0,0,0.8);
+   }
+   
+   .lightbox img {
+       /** Pad the lightbox image */
+       max-width: 90%;
+       max-height: 80%;
+       margin-top: 2%;
+   }
+   
+   .lightbox:target {
+       /** Remove default browser outline */
+       outline: none;
+       /** Unhide lightbox **/
+       display: block;
+   }
+   a.lightbox{
+       text-decoration: none;
+   }
+   
+   .p-left{
+       display: inline-block;
+       margin: 5px 0px 3px 0px;
+   }
+   
+   .p-right{
+       display: inline-block;
+       opacity: 0;
+       margin: 5px 3px 3px 0px;
+       border: none;
+       background: none;
+       font-size: 16px;
+   }
+
+   /* message lightbox content */
+
+   div.messageBox{
+       height: 270px;
+       width:450px;
+       background-color: white;
+       margin-top:150px;
+       margin-left:auto;
+       margin-right:auto;
+       padding:15px;
+   }
+   input.message{
+        padding:7px 7px 100px;
+        
+   }

@@ -1,0 +1,23 @@
+@model DogDay.Models.RegisterViewModel
+
+<div id="UserName" class="category">
+    <form asp-controller="Dog" asp-action="" method="post">
+    <div class="flex-space-around">
+        <div>
+            <label class="logreg-label" asp-for="Name">Name: <span class='error' id="NameErrors"></span></label>
+            <input class="logreg-input" asp-for="Name" id="registerName">
+            <br/>
+            <label class="logreg-label" asp-for="Email">Email: <span class='error' id="EmailErrors"></span></label>
+            <input class="logreg-input" asp-for="Email" id="registerEmail">
+        </div>
+        <div>
+            <label class="logreg-label" asp-for="Password">Password: <span class='error' id="PasswordErrors"></span></label>
+            <input class="logreg-input" asp-for="Password" id="registerPassword">
+            <br/>
+            <label class="logreg-label" asp-for="PassConf">Confirm Password: <span class='error' id="PassConfErrors"></span></label>
+            <input class="logreg-input" asp-for="PassConf" id="registerPassConf">
+        </div>
+    </div>
+    </form>
+</div>
+ <button id="startProfile" onclick="regPartOne()">Register & Create a Profile</button>
